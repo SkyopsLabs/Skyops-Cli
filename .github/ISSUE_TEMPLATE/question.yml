@@ -1,0 +1,75 @@
+name: Question or Support
+description: Ask a question or get help with SkyOps CLI
+title: "[Question]: "
+labels: ["question", "support"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Need help with SkyOps CLI? Please provide details about your question or issue.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      description: Please check the following before submitting
+      options:
+        - label: I have searched existing issues for similar questions
+          required: true
+        - label: I have checked the documentation
+          required: true
+        - label: I have tried basic troubleshooting steps
+          required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What do you need help with?
+      placeholder: Describe your question or issue in detail...
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: What are you trying to achieve?
+      placeholder: Describe what you're trying to do and why...
+    validations:
+      required: true
+
+  - type: textarea
+    id: attempted
+    attributes:
+      label: What Have You Tried?
+      description: What steps have you already taken?
+      placeholder: Describe what you've already tried to solve this...
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Which platform are you using?
+      options:
+        - Linux (x64)
+        - Linux (ARM64)
+        - macOS (Intel)
+        - macOS (Apple Silicon)
+        - Windows (x64)
+        - Multiple platforms
+        - Not applicable
+
+  - type: input
+    id: version
+    attributes:
+      label: SkyOps CLI Version
+      description: Output of `skyops version` (if applicable)
+      placeholder: v1.0.0
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Information
+      description: Any other information that might be helpful
+      placeholder: Add any other relevant information here...

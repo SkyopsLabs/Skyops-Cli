@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://docs.skyopslabs.ai
+    about: Check the official documentation for usage guides and troubleshooting
+  - name: Discord Community
+    url: https://discord.gg/skyops
+    about: Join our Discord community for help and discussions
+  - name: Security Issues
+    url: mailto:security@skyopslabs.ai
+    about: Report security vulnerabilities privately via email
