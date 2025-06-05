@@ -18,7 +18,7 @@ A high-performance GPU monitoring and job management agent for the SkyOps networ
 Download the appropriate binary for your platform from the [latest release](https://github.com/skyopslabs/skyops-cli/releases/):
 
 - **Linux (x64)**: `skyops-linux-amd64.tar.gz`
-- **Linux (ARM64)**: `skyops-linux-arm64.tar.gz`  
+- **Linux (ARM64)**: `skyops-linux-arm64.tar.gz`
 - **macOS (Intel)**: `skyops-darwin-amd64.tar.gz`
 - **macOS (Apple Silicon)**: `skyops-darwin-arm64.tar.gz`
 - **Windows (x64)**: `skyops-windows-amd64.zip`
@@ -39,8 +39,14 @@ sudo apt-get install -f
 ### Windows Installation (.msi package)
 
 1. Download the `.msi` installer from the [releases page](https://github.com/skyopslabs/skyops-cli/releases/)
-2. Double-click the installer and follow the setup wizard
-3. The CLI will be available in your PATH as `skyops`
+2. Double-click the installer to install
+3. The CLI will be installed to `C:\Program Files\SkyOps` or `C:\Program Files (x86)\SkyOps`
+4. Add the installation directory to your PATH environment variable if not already added:
+   - Open System Properties → Advanced → Environment Variables
+   - Under System Variables, select "Path" and click "Edit"
+   - Click "New" and add the installation path
+   - Click "OK" to save changes
+5. The CLI will be available in your PATH as `skyops`
 
 ### Manual Installation
 
@@ -49,31 +55,13 @@ sudo apt-get install -f
 
 ```bash
 # Linux/macOS
-mkdir -p ~/skyops
-mv skyops ~/skyops/
+mkdir -p ~/.skyops
+mv skyops ~/.skyops/
 
 # Add to your PATH (add this to your ~/.bashrc, ~/.zshrc, or ~/.profile)
-export PATH="$HOME/skyops:$PATH"
+export PATH="$HOME/.skyops:$PATH"
 
-# Or use the system-wide installation
-sudo mv skyops /usr/local/bin/
-```
 
-## Configuration
-
-Create a configuration file at `~/skyops/config.json`:
-
-```json
-{
-  "agent_id": "skyops_node_${hostname}",
-  "backend_url": "https://app.skyopslabs.ai", 
-  "heartbeat_interval": 30,
-  "max_price_per_hour": 1.50,
-  "auto_accept_jobs": false,
-  "gpu_whitelist": [],
-  "logging_level": "info",
-  "logging_file": "gpu-agent.log"
-}
 ```
 
 ## Usage
@@ -95,19 +83,6 @@ skyops status
 
 # Stop the daemon
 skyops daemon stop
-```
-
-### Monitor GPU Status
-
-```bash
-# Show current GPU status
-skyops gpu status
-
-# Monitor GPU usage in real-time
-skyops gpu monitor
-
-# Show system information
-skyops system info
 ```
 
 ### Version Information
@@ -134,12 +109,11 @@ skyops version --verbose
 ### Common Issues
 
 1. **GPU not detected**: Ensure NVIDIA drivers are installed and `nvidia-smi` works
-2. **Permission denied**: Run with appropriate permissions or use `sudo` for system-wide installation
-3. **Config file not found**: Create the config directory: `mkdir -p ~/skyops`
 
 ### Logs
 
 Check logs for troubleshooting:
+
 - Linux/macOS: `~/skyops/logs/gpu-agent.log`
 - Windows: `%USERPROFILE%\skyops\logs\gpu-agent.log`
 
