@@ -31,7 +31,6 @@ jobs:
             - Real-time NVIDIA GPU monitoring via NVML
             - Comprehensive system monitoring (CPU, memory, disk, network)
             - Single binary distribution with no external dependencies
-            - Structured logging with configurable levels
             - Daemon mode for background operation
             
             ### Commands
@@ -49,12 +48,11 @@ jobs:
             ### Download Instructions
             1. Choose the appropriate file for your platform from the assets below
             2. For detailed installation instructions, see [INSTALL.md](INSTALL.md)
-            3. For Windows users, we recommend the MSI installer for automatic PATH setup
+            3. For Windows users, we recommend the MSI installer, then add to PATH.
             4. For Linux users, the DEB package provides system integration
             
             ### Security
             - Secure HTTPS communication with SkyOps backend
-            - Local configuration management with proper file permissions
             - Authenticated API communication
             
             See [CHANGELOG.md](CHANGELOG.md) for detailed changes.

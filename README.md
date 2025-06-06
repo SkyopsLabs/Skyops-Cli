@@ -7,9 +7,6 @@ A high-performance GPU monitoring and job management agent for the SkyOps networ
 - **Cross-platform**: Native binaries for Linux, macOS, and Windows
 - **GPU Monitoring**: Real-time NVIDIA GPU monitoring via NVML
 - **System Monitoring**: CPU, memory, disk, and network statistics
-- **Job Management**: Automatic job offer handling and execution
-- **Lightweight**: Single binary with no dependencies
-- **Logging**: Structured logging with configurable levels
 
 ## Installation
 
@@ -27,7 +24,7 @@ Download the appropriate binary for your platform from the [latest release](http
 
 ```bash
 # Download the .deb package from releases
-wget https://github.com/skyopslabs/skyops-cli/releases/latest/download/skyops_1.0.0-1_amd64.deb
+wget https://github.com/SkyopsLabs/Skyops-Cli/releases/download/v1.0.0/skyops_1.0.0-1_amd64.deb 
 
 # Install the package
 sudo dpkg -i skyops_1.0.0-1_amd64.deb
@@ -40,7 +37,7 @@ sudo apt-get install -f
 
 1. Download the `.msi` installer from the [releases page](https://github.com/skyopslabs/skyops-cli/releases/)
 2. Double-click the installer to install
-3. The CLI will be installed to `C:\Program Files\SkyOps` or `C:\Program Files (x86)\SkyOps`
+3. The Skyops binary will be installed to `C:\Program Files\SkyOps` or `C:\Program Files (x86)\SkyOps`
 4. Add the installation directory to your PATH environment variable if not already added:
    - Open System Properties → Advanced → Environment Variables
    - Under System Variables, select "Path" and click "Edit"
@@ -69,20 +66,29 @@ export PATH="$HOME/.skyops:$PATH"
 ### Start the Agent
 
 ```bash
-# Start with default configuration
+# Authenticate with your wallet
+skyops login
+
+# Register your node with the network
+skyops register
+
+# Test connectivity to the network (add -v flag for more detailed output)
+skyops ping
+
+# Start your node to wait and process jobs if available
 skyops start
 
-# Start with custom config file
-skyops start --config /path/to/config.json
-
 # Start in daemon mode (background)
-skyops daemon start
+skyops start --daemon
 
-# Check status
+# Check status (if node is running or not)
 skyops status
 
-# Stop the daemon
-skyops daemon stop
+# Check statistics of your node on the network
+skyops stats
+
+# Stop the daemon / node from running
+skyops stop
 ```
 
 ### Version Information
@@ -91,35 +97,27 @@ skyops daemon stop
 # Show version
 skyops version
 
-# Show detailed build information
-skyops version --verbose
+# Show help
+skyops help
 ```
 
-## Command Reference
-
-- `skyops start` - Start the agent
-- `skyops daemon start|stop|status` - Manage daemon process
-- `skyops gpu status|monitor` - GPU monitoring commands
-- `skyops system info` - System information
-- `skyops version` - Version information
-- `skyops help` - Show help
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **GPU not detected**: Ensure NVIDIA drivers are installed and `nvidia-smi` works
+1. **GPU not found**: Ensure NVIDIA drivers are installed and `nvidia-smi` works
 
 ### Logs
 
 Check logs for troubleshooting:
 
-- Linux/macOS: `~/skyops/logs/gpu-agent.log`
-- Windows: `%USERPROFILE%\skyops\logs\gpu-agent.log`
+- Linux/macOS: `~/.skyops/logs/gpu-agent.log`
+- Windows: `%USERPROFILE%\.skyops\logs\gpu-agent.log`
 
 ### Support
 
-- Documentation: [docs.skyopslabs.ai](https://docs.skyopslabs.ai)
+- Documentation: [docs.skyopslabs.ai](https://docs.skyopslabs.ai/documentation/join-as-provider)
 - Issues: [GitHub Issues](https://github.com/skyopslabs/skyops-cli/issues)
 - Community: [Discord](https://discord.gg/skyops)
 
