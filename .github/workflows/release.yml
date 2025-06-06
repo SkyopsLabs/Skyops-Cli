@@ -1,0 +1,132 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          body: |
+            ## SkyOps CLI ${{ github.ref_name }}
+            
+            ### Features
+            - Cross-platform GPU monitoring and job management agent
+            - Real-time NVIDIA GPU monitoring via NVML
+            - Comprehensive system monitoring (CPU, memory, disk, network)
+            - Single binary distribution with no external dependencies
+            - Structured logging with configurable levels
+            - Daemon mode for background operation
+            
+            ### Commands
+            - **Authentication**: `login` - Authenticate with SkyOps network
+            - **Registration**: `register` - Register node with SkyOps network  
+            - **Agent Control**: `start`, `stop`, `status` - Manage agent lifecycle
+            - **Monitoring**: `stats`, `ping` - Monitor agent performance and connectivity
+            - **Information**: `version`, `help` - Get version and usage information
+            
+            ### Supported Platforms
+            - Linux (x64, ARM64) - Available as DEB package and tarball
+            - macOS (Intel, Apple Silicon) - Available as tarball
+            - Windows (x64) - Available as MSI installer and ZIP archive
+            
+            ### Download Instructions
+            1. Choose the appropriate file for your platform from the assets below
+            2. For detailed installation instructions, see [INSTALL.md](INSTALL.md)
+            3. For Windows users, we recommend the MSI installer for automatic PATH setup
+            4. For Linux users, the DEB package provides system integration
+            
+            ### Security
+            - Secure HTTPS communication with SkyOps backend
+            - Local configuration management with proper file permissions
+            - Authenticated API communication
+            
+            See [CHANGELOG.md](CHANGELOG.md) for detailed changes.
+          draft: false
+          prerelease: true
+
+      - name: Upload Linux AMD64 Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./releases/skyops-linux-amd64.tar.gz
+          asset_name: skyops-linux-amd64.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Upload Linux ARM64 Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./releases/skyops-linux-arm64.tar.gz
+          asset_name: skyops-linux-arm64.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Upload Linux DEB Package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./releases/skyops_1.0.0-1_amd64.deb
+          asset_name: skyops_1.0.0-1_amd64.deb
+          asset_content_type: application/vnd.debian.binary-package
+
+      - name: Upload macOS Intel Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./releases/skyops-darwin-amd64.tar.gz
+          asset_name: skyops-darwin-amd64.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Upload macOS Apple Silicon Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./releases/skyops-darwin-arm64.tar.gz
+          asset_name: skyops-darwin-arm64.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Upload Windows ZIP Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./releases/skyops-windows-amd64.zip
+          asset_name: skyops-windows-amd64.zip
+          asset_content_type: application/zip
+
+      - name: Upload Windows MSI Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./releases/skyops_1.0.0_windows_amd64.msi
+          asset_name: skyops_1.0.0_windows_amd64.msi
+          asset_content_type: application/x-msi
